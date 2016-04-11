@@ -1,0 +1,42 @@
+* { margin: 0; padding: 0;}
+body { background:#fff; margin:20px;}
+#calendar { font-family:Arial, Helvetica, sans-serif; }
+#calendar .header { width:350px;}
+#calendar .header td { height:46px; text-align:center;}
+#calendar .header .prevMonthActive,#calendar .header .nextMonthActive { width:50px; cursor:pointer;}
+#calendar .header .prevMonth,#calendar .header .nextMonth { width:50px;}
+#calendar .header .prevMonthActive { background:url(images/electionCalendar_prev_active.gif) no-repeat center center;}
+#calendar .header .nextMonthActive { background:url(images/electionCalendar_next_active.gif) no-repeat center center;}
+#calendar .header .prevMonth { background:url(images/electionCalendar_prev.gif) no-repeat center center;}
+#calendar .header .nextMonth { background:url(images/electionCalendar_next.gif) no-repeat center center;}
+#calendar .header .currentDate { width:240px; font-size:20px; font-weight:bold;color:#96ADC3;}
+
+#calendar .content { width:350px; height:175px;background:#fff; font-size:16px; color:#b4b4b4;}
+#calendar .content  td { width:50px; height:25px; text-align:center;}
+#calendar .content  .weekdays { background:#B1C3D4;font-size:24px; font-weight:bold; color:#fff;}
+#calendar .content  .weekdays  td { height:34px;}
+#calendar .content  .isDoubleDay {color:#0C4790; font-weight:bold; cursor:pointer;}
+#calendar .content  .isDate { cursor:pointer;}
+#calendar .content  .isToday { background:#E7EDF2; cursor:pointer;}
+#calendar .content  .isSelected  { background:red; cursor:pointer;background:#ffc url(images/pageflake_calendar_select_bg.gif) no-repeat top left;}
+
+#calendarT { font-family: Tahoma;font-size:11px;  }
+#calendarT .header { width:295px; background-color:#E6E6E6;}
+#calendarT .header td { height:24px; text-align:center;}
+#calendarT .header .prevMonthActive,#calendarT .header .nextMonthActive { width:50px; cursor:pointer;}
+#calendarT .header .prevMonth,#calendarT .header .nextMonth { width:50px;}
+#calendarT .header .prevMonthActive { background:url(images/pageflake_calendar_prev.gif) no-repeat center center;}
+#calendarT .header .nextMonthActive { background:url(images/pageflake_calendar_next.gif) no-repeat center center;}
+#calendarT .header .prevMonth { background:url(images/pageflake_calendar_prev_disabled.gif) no-repeat center center;}
+#calendarT .header .nextMonth { background:url(images/pageflake_calendar_next_disabled.gif) no-repeat center center;}
+#calendarT .header .currentDate { width:240px;color:#000;}
+
+#calendarT .content { width:295px; height:175px;background:#fff; margin-top:3px; color:#b4b4b4;}
+#calendarT .content  td { width:41px; height:20px; text-align:right; padding-right:1px; border:1px solid #F1F6FC;}
+#calendarT .content  .weekdays { background:#F1F6FC;font-weight:bold; color:#000;}
+#calendarT .content  .weekdays  td { height:20px; text-align:center;}
+#calendarT .content  .isDoubleDay {color:#0C4790; font-weight:bold; cursor:pointer;}
+#calendarT .content  .isDoubleDay { background:#ffc;}
+#calendarT .content  .isToday { background:#F1F6FC; cursor:pointer;}
+#calendarT .content  .isDate { cursor:pointer;}
+#calendarT .content  .isSelected { cursor:pointer; background:#ffc url(images/pageflake_calendar_select_bg.gif) no-repeat top left;}
