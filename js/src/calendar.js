@@ -5,6 +5,9 @@ function Calendar () {
   var divObj = null,
       tableObj = null;
   var today = 0;
+  var currentYear, currentMonth;
+  var previousYear, previousMonth; 
+  var daysInAMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
 
 
 }
@@ -86,6 +89,42 @@ Calendar.prototype = {
       weekHtml += this.generateDayHtml(days[i], classSetTo);
     }
     return weekHtml;
-  }
+  },
+  
+  getPreviousMonth: function (year, month) {
+    if (month === 1) { 
+      return { 
+        year: year - 1,
+        month : 12
+      };
+    }
+    else { 
+      return {
+        year : year,
+        month: month - 1
+      };
+    }
+  },
+  
+  setCurrentYearMonth: function (year, month) {
+    this.currentYear = year;
+    this.currentMonth = month;
+    this.daysInAMonth[1] = this.isLeapYear(year) ? 29 : 28;
+    return this;
+  },
+  
+  getFirstDayOfMonth: function (year, month) {
+    // Date(2016, 3, 1) = 2016-4-1; Date's month starts at 0;
+    var tmpDate = new Date(year, month - 1, 1);
+    var dayOfWeek = tmpDate.getDay();
+    return dayOfWeek === 0 ? 7 : dayOfWeek;
+  },
+  
+  getPreMonth: function (year, month) {
+  },
+  
+  generateDaysOfMonth: function (year, month) { 
+    var fisrtDayOfMonth = this.getFirstDayOfMonth(year, month);
+  }  
     
 };
