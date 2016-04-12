@@ -1,13 +1,9 @@
 function Calendar () {
-  var monthNames = ['January','February','March','April','May','June',
-		'July','August','September','October','November','December'],
-      dayNames = ['Monday', 'TuesDay', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-  var divObj = null,
-      tableObj = null;
-  var today = 0;
-  var currentYear, currentMonth;
-  var previousYear, previousMonth; 
-  var daysInAMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
+  this.today = null;
+  this.currentYear = null;
+  this.currentMonth = null;
+  this.previousYear = null;
+  this.previousMonth = null;
 
 
 }
@@ -17,16 +13,18 @@ Calendar.prototype = {
 		'July','August','September','October','November','December'],
     
   dayNames: ['Monday', 'TuesDay', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-  
+  daysInAMonth: [31,28,31,30,31,30,31,31,30,31,30,31],
+  daysOfAWeek: 7,
+  numOfWeekDispInAMonth: 6,
   initTdAndTr: function (table) {
     // var tableObj = document.getElementById(tableName);
     var inHtml = "";
-    for (var i = 0; i < 7; i++) {
+    for (var i = 0; i < this.daysOfAWeek; i++) {
       inHtml += '<th>' + this.dayNames[i] + '</th>';    
     }
-    for (var index = 0; index < 5; index++) {
+    for (var index = 0; index < this.numOfWeekDispInAMonth; index++) {
       inHtml += '<tr>';
-      for (var j = 0; j < 7; j++) {
+      for (var j = 0; j < this.daysOfAWeek; j++) {
         inHtml += '<td>' + j + '</td>';
       }
       inHtml += '</tr>';
@@ -110,7 +108,18 @@ Calendar.prototype = {
     this.currentYear = year;
     this.currentMonth = month;
     this.daysInAMonth[1] = this.isLeapYear(year) ? 29 : 28;
-    return this;
+//    console.log(this.isLeapYear(year));
+  },
+  
+  getDayArrayOfAMonth: function (year, month) {
+    if (month === 2) {
+      return this.isLeapYear(year) ? 29 : 28;
+    }
+    else {
+      // starts at 0;
+      return this.daysInAMonth[month - 1];
+    }
+    
   },
   
   getFirstDayOfMonth: function (year, month) {
@@ -120,9 +129,29 @@ Calendar.prototype = {
     return dayOfWeek === 0 ? 7 : dayOfWeek;
   },
   
-  getPreMonth: function (year, month) {
+  generateTableOfMonth: function (year, month) {
+    var that = this;
+    var firstDayOfWeek = that.getFirstDayOfMonth(year, month);
+    var preMonth = that.getPreviousMonth(year, month);
+    var preMonthDays = that.getDayArrayOfAMonth(preMonth.year, preMonth.month);
+    var currentMonthDays = that.getDayArrayOfAMonth(year, month);
+    var resultMonthData = [];
+    // if firstDayOfWeek === 2, generate 4 days ahead
+    for (var i = 0; i < firstDayOfWeek - 1; i++) {
+      resultMonthData.unshift(preMonthDays - i);
+    } 
+    for (var j = 0; j < currentMonthDays; j++) {
+      resultMonthData.push(j + 1);
+    }
+    // generate next month days
+    var nextMonthDays = that.numOfWeekDispInAMonth * that.daysOfAWeek - resultMonthData.length;
+    for (i = 0; i < nextMonthDays; i++) {
+      resultMonthData.push(i + 1);
+    }
+    return resultMonthData;
   },
   
+ 
   generateDaysOfMonth: function (year, month) { 
     var fisrtDayOfMonth = this.getFirstDayOfMonth(year, month);
   }  
