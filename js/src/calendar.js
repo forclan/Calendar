@@ -4,6 +4,9 @@ function Calendar () {
   this.currentMonth = null;
   this.previousYear = null;
   this.previousMonth = null;
+  this.dayCSS = null;
+  this.tableObj = null;
+  this.divObj = null;
 
 
 }
@@ -14,23 +17,8 @@ Calendar.prototype = {
 
   dayNames: ['Monday', 'TuesDay', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
   daysInAMonth: [31,28,31,30,31,30,31,31,30,31,30,31],
-  daysOfAWeek: 7,
+  daysInAWeek: 7,
   numOfWeekDispInAMonth: 6,
-  initTdAndTr: function (table) {
-    // var tableObj = document.getElementById(tableName);
-    var inHtml = "";
-    for (var i = 0; i < this.daysOfAWeek; i++) {
-      inHtml += '<th>' + this.dayNames[i] + '</th>';
-    }
-    for (var index = 0; index < this.numOfWeekDispInAMonth; index++) {
-      inHtml += '<tr>';
-      for (var j = 0; j < this.daysOfAWeek; j++) {
-        inHtml += '<td>' + j + '</td>';
-      }
-      inHtml += '</tr>';
-    }
-    table.innerHTML = inHtml;
-  },
 
   setClassOfChildInTagName: function (childTagName) {
     var that = this;
@@ -41,18 +29,6 @@ Calendar.prototype = {
       }
       return that.childArray;
     };
-  },
-
-  setTdClass: function (classSetTo) {
-    var that = this;
-    // var settdClass = that.getChildOfTagName('td');
-    // settdClass(classSetTo);
-    return that.setClassOfChildInTagName('td')(classSetTo);
-  },
-
-  setThClass: function (classSetTo) {
-    var that = this;
-    return that.setClassOfChildInTagName('th')(classSetTo);
   },
 
   createTableWithId: function (IdName) {
@@ -68,23 +44,26 @@ Calendar.prototype = {
     var table = that.createTableWithId(tableId);
     document.body.appendChild(table);
     that.tableObj = table;
-    that.initTdAndTr(table);
+    var newTable = that.generateTableInnerHtml(2016, 4);
+    that.tableObj.innerHTML = newTable;
   },
 
   isLeapYear:function(year){
 		return ( year % 4 === 0 && year % 100 !== 0) || ( year % 400 === 0 );
 	},
 
-  generateDayHtml: function (day, classSetTo) {
-    classSet = this.day === day ? this.TodayClass : classSetTo || this.tdClass || "";
-    var strClassEqual = classSet === "" ? "" : ' class="' + classSet + '"';
+  generateDayHtml: function (day) {
+    var classSetTo = this.dayCSS;
+    var classValue = classSetTo || "";
+    var strClassEqual = classValue === "" ? "" : ' class="' + classValue + '"';
     return '<td' + strClassEqual + '>' + day + '</td>';
   },
 
-  generateWeekHtml: function (days, classSetTo) {
+  generateWeekHtml: function (days) {
+    var that = this;
     var weekHtml = "";
     for (var i = 0; i < days.length; i++) {
-      weekHtml += this.generateDayHtml(days[i], classSetTo);
+      weekHtml += that.generateDayHtml(days[i]);
     }
     return weekHtml;
   },
@@ -144,16 +123,48 @@ Calendar.prototype = {
       resultMonthData.push(j + 1);
     }
     // generate next month days
-    var nextMonthDays = that.numOfWeekDispInAMonth * that.daysOfAWeek - resultMonthData.length;
+    var nextMonthDays = that.numOfWeekDispInAMonth * that.daysInAWeek - resultMonthData.length;
     for (i = 0; i < nextMonthDays; i++) {
       resultMonthData.push(i + 1);
     }
     return resultMonthData;
   },
+  
+  splitArrayByLength: function (array, length) {
+    var arr = [];
+    var inLen = array.length;
+    var chips = Math.ceil(inLen / length);
+    for (var i = 0; i < chips; i++) {
+      arr.push(array.splice(0, length));
+    }
+    return arr;
+  },
+  
+  generateMonthHtml: function (year, month) {
+    var that = this;
+    var dayArrayOfMonth = that.generateTableOfMonth(year, month);
+    var splicedDayArray = that.splitArrayByLength(dayArrayOfMonth, that.daysInAWeek);
+    var monthHtml = '';
+    for (var i = 0, length = splicedDayArray.length; i < length; i++) {
+      monthHtml += "<tr>";
+      monthHtml += that.generateWeekHtml(splicedDayArray[i]);
+      monthHtml += "</tr>";
+    }
+    return monthHtml;
+  },
 
-
-  generateDaysOfMonth: function (year, month) {
-    var fisrtDayOfMonth = this.getFirstDayOfMonth(year, month);
+  generateTableInnerHtml: function (year, month) {
+    var that = this;
+    var inHtml = "";
+    for (var i = 0; i < that.daysInAWeek; i++) {
+      inHtml += '<th>' + that.dayNames[i] + '</th>';
+    }  
+    inHtml += that.generateMonthHtml(year, month);
+    return inHtml;
+  },
+  
+  render: function () {
+    var that = this;
   }
 
 };
