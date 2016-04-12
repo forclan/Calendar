@@ -1,4 +1,4 @@
-function Calander () {
+function Calendar () {
   var monthNames = ['January','February','March','April','May','June',
 		'July','August','September','October','November','December'],
       dayNames = ['Monday', 'TuesDay', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -8,7 +8,7 @@ function Calander () {
 
 
 }
-Calander.prototype = {
+Calendar.prototype = {
   // create a 5 * 7 td in tables
   monthNames: ['January','February','March','April','May','June',
 		'July','August','September','October','November','December'],
