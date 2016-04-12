@@ -76,7 +76,16 @@ Calendar.prototype = {
   
   generateDayHtml: function (day, classSetTo) {
     classSet = this.day === day ? this.TodayClass : classSetTo || this.tdClass || "";
-    return '<td class="' + classSet + '">' + day + '</td>';
+    var strClassEqual = classSet === "" ? "" : ' class="' + classSet + '"';
+    return '<td' + strClassEqual + '>' + day + '</td>';
+  },
+  
+  generateWeekHtml: function (days, classSetTo) {
+    var weekHtml = "";
+    for (var i = 0; i < days.length; i++) {
+      weekHtml += this.generateDayHtml(days[i], classSetTo);
+    }
+    return weekHtml;
   }
     
 };
