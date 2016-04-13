@@ -7,6 +7,8 @@ function Calendar () {
   this.dayCSS = null;
   this.tableObj = null;
   this.divObj = null;
+  // 导入别人写好的公历转农历的对象
+  this.translate = calendar;
 
 
 }
