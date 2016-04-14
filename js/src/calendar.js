@@ -8,8 +8,6 @@ function Calendar () {
   this.tableObj = null;
   this.divObj = null;
   // 导入别人写好的公历转农历的对象
-  this.translate = calendar;
-
 
 }
 Calendar.prototype = {
@@ -21,6 +19,8 @@ Calendar.prototype = {
   daysInAMonth: [31,28,31,30,31,30,31,31,30,31,30,31],
   daysInAWeek: 7,
   numOfWeekDispInAMonth: 6,
+  tanslate: calendar,
+  generateTag: generateTag,
 
   setClassOfChildInTagName: function (childTagName) {
     var that = this;
@@ -53,12 +53,18 @@ Calendar.prototype = {
   isLeapYear:function(year){
 		return ( year % 4 === 0 && year % 100 !== 0) || ( year % 400 === 0 );
 	},
+  
+  
+  generateTdHtml: function (dayObj, classSetTo) {
+    var returnHtml = "";
+    var classInTd = classSetTo || "";
+  },
 
-  generateDayHtml: function (day) {
+  generateDayHtml: function (dayObj) {
     var classSetTo = this.dayCSS;
     var classValue = classSetTo || "";
     var strClassEqual = classValue === "" ? "" : ' class="' + classValue + '"';
-    return '<td' + strClassEqual + '>' + day + '</td>';
+    return '<td' + strClassEqual + '>' + dayObj.day + '</td>';
   },
 
   generateWeekHtml: function (days) {
@@ -168,5 +174,54 @@ Calendar.prototype = {
   render: function () {
     var that = this;
   }
+  
+  
 
 };
+
+function date2MDate(dateObj) {
+  return {
+    year: dateObj.getFullYear(),
+    month: dateObj.getMonth() + 1,
+    day: dateObj.getDate()
+  };
+}
+
+function mDate2Date(mDateObj) {
+  return new Date(mDate.year, mDate.month - 1, mDate.day);
+}
+
+function CalendarDay(dateObj) {
+  this.tagName = 'td';
+  var mDate = date2MDate(dateObj);
+  var lunaDate = calendar.solar2lunar(mDate.year, mDate.month, mDate.day);
+  this.innerTag = [];
+  this.innerTag.push({
+    tagName: 'p',
+    attribute: {
+      class: 'dayNum',
+    },
+    text: mDate.day 
+  });
+  this.innerTag.push({
+    tagName: 'p',
+    attribute: {
+      class: 'lunaDayNum'  
+    },
+    text: lunaDate.IDayCn
+  });
+}
+
+function CalendayWeek(firstDateObj) {
+  var mStartDay = date2MDate(firstDateObj);
+  this.tagName = 'tr';
+  this.innerTag = [];
+  for (var i = 0; i < 7; i++) {
+    var dayOfWeek = new Date(mStartDay.year, mStartDay.month - 1, mStartDay.day + i);
+    var calDay = new CalendarDay(dayOfWeek);
+    this.innerTag.push(calDay);
+  }
+  this.attribute = {
+    class: 'weekClass'
+  };
+}

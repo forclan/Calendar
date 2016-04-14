@@ -234,7 +234,7 @@ var calendar = {
  * @eg:var MonthDay = calendar.monthDays(1987,9) ;//MonthDay=29
  */
  monthDays:function(y,m) {
- if(m>12 || m<1) {return -1}//月份参数从1至12，参数错误返回-1
+ if(m>12 || m<1) {return -1;}//月份参数从1至12，参数错误返回-1
  return( (calendar.lunarInfo[y-1900] & (0x10000>>m))? 30: 29 );
  },
  
