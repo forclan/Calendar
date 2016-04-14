@@ -7,24 +7,13 @@
 
   </head>
   <body>
-    <h1>Hello, world!</h1>
-   <table id="table1" border="1" width="400">
-    <tr>
-      <th>Month</th>
-      <th>Savings</th>
-    </tr>
-    <tr>
-      <td>January</td>
-      <td>$100</td>
-    </tr>
-  </table>
-
   <script src="./src/generateTag.js"></script>
+  <script src="./src/generateMonthTag.js"></script>
   <script src="./src/translate.js"></script>
   <script src="./src/calendar.js"></script>
   <script type="text/javascript">
     var cal = new Calendar();
-    var table = cal.initTable("hxpTable");
+    cal.init();
   </script>
   </body>
 </html>

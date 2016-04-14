@@ -33,8 +33,6 @@ var generateTag = function(){
       innerTagHtml + '</' + tagObj.tagName + '>';
     return re;
   }
-  var app = {};
-  app.getTag = getTag;
-  return app;
+  return getTag;
   
 }();
