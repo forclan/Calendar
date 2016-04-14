@@ -1,9 +1,7 @@
 * { margin: 0; padding: 0;}
 body { background:#fff; margin:20px;}
-.calendar-new-table-almanac, .calendar-new-table-weekend .calendar-new-daynumber, th.op-calendar-new-table-weekend {
+.calendar-new-table-almanac {
     color: #e02d2d;
-    text-align:center;
-    margin:0 auto;
 }
 .calendar-new-daynumber {
     display: block;
@@ -14,7 +12,7 @@ body { background:#fff; margin:20px;}
     margin:0 auto;
 }
 th {
-    width: 55px;
+    width: 70px;
     height: 54px;
     border-top: 1px solid #c8cacc;
     padding: 0;
