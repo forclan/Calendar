@@ -1,7 +1,19 @@
 * { margin: 0; padding: 0;}
 body { background:#fff; margin:20px;}
-.calendar-new-table-almanac {
-    color: #e02d2d;
+table {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #999999;
+	border-collapse: collapse;
+}
+.calendar-new-table-almana {
+  display: block;
+    font-size: 20px;
+    color: #999999;
+    text-align:center;
+    margin:0 auto;
 }
 .calendar-new-daynumber {
     display: block;
@@ -19,29 +31,17 @@ th {
     text-align:center;
     margin:0 auto;
 }
-table {
-    display: table;
-    border-collapse: separate;
-    border-spacing: 2px;
-    border-color: grey;
-}
-table {
-	font-family: verdana,arial,sans-serif;
-	font-size:11px;
-	color:#333333;
-	border-width: 1px;
-	border-color: #999999;
-	border-collapse: collapse;
-}
 table th {
-	background:#b5cfd2 url('cell-blue.jpg');
+  width: 65px;
+  height: 54px;
+	background:#b5cfd2;
 	border-width: 1px;
 	padding: 8px;
 	border-style: solid;
 	border-color: #999999;
 }
 table td {
-	background:#dcddc0 url('cell-grey.jpg');
+	background:#dcddc0 ;
 	border-width: 1px;
 	padding: 8px;
 	border-style: solid;
