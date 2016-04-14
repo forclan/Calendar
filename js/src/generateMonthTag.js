@@ -14,11 +14,20 @@ var generateMonthTag = function () {
   function mDate2Date(mDateObj) {
     return new Date(mDateObj.year, mDateObj.month - 1, mDateObj.day);
   }
-
+  function mDate2String(mDateObj) {
+    var re = '';
+    return re + mDateObj.year + '-' + mDateObj.month + '-' + mDateObj.day;
+  }
   function CalendarDay(dateObj) {
     this.tagName = 'td';
     var mDate = date2MDate(dateObj);
     var lunaDate = calendar.solar2lunar(mDate.year, mDate.month, mDate.day);
+    var dateStr = mDate2String(mDate);
+    this.attribute = {
+      onclick: 'setCalerdarDate(this)',
+      hidefocus: 'true',
+      date: dateStr
+    };
     this.innerTag = [];
     this.innerTag.push({
       tagName: 'span',
@@ -57,7 +66,7 @@ var generateMonthTag = function () {
       var weekTag = {
         tagName: 'th',
         attribute: {
-          class: 'dayName'
+          class: 'dayName',
         },
         text: dayNameArr[i],
       };
