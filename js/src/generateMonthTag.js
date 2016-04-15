@@ -2,7 +2,7 @@ var generateMonthTag = function () {
   var dayCSS = 'dayCSS',
       weekCSS = 'weekCSS',
       monthCSS = 'monthCSS';
-  dayNames =  ['Monday', 'TuesDay', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  var dayNames =  ['Monday', 'TuesDay', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   function date2MDate(dateObj) {
     return {
       year: dateObj.getFullYear(),
@@ -18,17 +18,18 @@ var generateMonthTag = function () {
     var re = '';
     return re + mDateObj.year + '-' + mDateObj.month + '-' + mDateObj.day;
   }
-  function CalendarDay(dateObj) {
-    this.tagName = 'td';
+
+  function CalendarHref(dateObj) {
     var mDate = date2MDate(dateObj);
     var lunaDate = calendar.solar2lunar(mDate.year, mDate.month, mDate.day);
     var dateStr = mDate2String(mDate);
+    this.tagName = 'a';
     this.attribute = {
-      onclick: 'setCalerdarDate(this)',
-      hidefocus: 'true',
-      date: dateStr
+      href: 'javascript:;',
+      hidefocus: 'true'
     };
     this.innerTag = [];
+   
     this.innerTag.push({
       tagName: 'span',
       attribute: {
@@ -43,6 +44,17 @@ var generateMonthTag = function () {
       },
       text: lunaDate.IDayCn
     });
+  }
+  function CalendarDay(dateObj) {
+    this.tagName = 'td';
+    var mDate = date2MDate(dateObj);
+    var lunaDate = calendar.solar2lunar(mDate.year, mDate.month, mDate.day);
+    var dateStr = mDate2String(mDate);
+    this.attribute = {
+      //onclick: 'cal.setCalerdarDate(this)',
+      date: dateStr
+    };
+    this.innerTag = new CalendarHref(dateObj);
   }
 
   function CalendayWeek(firstDateObj) {
@@ -116,5 +128,6 @@ var generateMonthTag = function () {
   app.setWeekNames = function (dayNameArray) {
       dayNames = dayNameArray;
   };
+  app.Week = CalendayWeek;
   return app;
 }();

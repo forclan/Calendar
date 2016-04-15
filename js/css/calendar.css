@@ -1,5 +1,16 @@
 * { margin: 0; padding: 0;}
 body { background:#fff; margin:20px;}
+a {
+}
+a:link{text-decoration:none;   /* 指正常的未被访问过的链接*/
+}
+a:visited{text-decoration:none; /*指已经访问过的链接*/
+}
+a:hover{text-decoration:none;/*指鼠标在链接*/
+}
+a:active{
+    text-decoration:none;/* 指正在点的链接*/ 
+}
 table {
 	font-family: verdana,arial,sans-serif;
 	font-size:11px;
@@ -24,7 +35,7 @@ table {
     margin:0 auto;
 }
 th {
-    width: 70px;
+    width: 75px;
     height: 54px;
     border-top: 1px solid #c8cacc;
     padding: 0;
