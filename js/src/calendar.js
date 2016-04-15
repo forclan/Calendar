@@ -2,8 +2,11 @@ function Calendar () {
   this.today = null;
   this.currentYear = null;
   this.currentMonth = null;
-  this.divObj = null;
+  this.calendarObj = null;
   this.tableObj = null;
+  this.divObj = null;
+  this.preMonthButton = null;
+  this.nextMonthButton = null;
 }
 Calendar.prototype = {
   
@@ -30,6 +33,13 @@ Calendar.prototype = {
     return monthTags;
   },
   
+  getButtonDoc: function (id, value) {
+    var buttonDoc = document.createElement('input');
+    buttonDoc.setAttribute('id', id);
+    buttonDoc.setAttribute('value', value);
+    return buttonDoc;
+  },
+  
   // 初始化函数
   init: function () {
     var date = new Date();
@@ -37,9 +47,20 @@ Calendar.prototype = {
     this.currentYear = date.getFullYear();
     this.currentMonth = date.getMonth() + 1;
     this.today = date.getDay() === 0 ? 7 : date.getDay();
+    var calendarObj = document.createElement('div');
+    calendarObj.setAttribute('id', 'calerdar-frame');
+    
+    var operationDiv = document.createElement('div');
+    var nextMonthButton = this.getButtonDoc('next-month-button', 'nextMonth');
+    var preMonthButton = this.getButtonDoc('pre-month-button', 'preMonth');
+    operationDiv.appendChild(preMonthButton);
+    operationDiv.appendChild(nextMonthButton);
+    calendarObj.appendChild(operationDiv);
     var divObj = document.createElement('div');
-    document.body.appendChild(divObj);
+    calendarObj.appendChild(divObj);
     this.divObj = divObj;
+    document.body.appendChild(calendarObj);
+    this.calendarObj = calendarObj;
     this.render();
   },
   
