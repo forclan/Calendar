@@ -3,6 +3,7 @@ function Calendar () {
   this.currentYear = null;
   this.currentMonth = null;
   this.divObj = null;
+  this.tableObj = null;
 }
 Calendar.prototype = {
   
@@ -47,12 +48,8 @@ Calendar.prototype = {
     var that = this;
     var divObj = this.divObj;
     var tdArr = divObj.getElementsByTagName('td');
-    var a = function (ss) {
-      return function () {
-         console.log('fff'+ss)  ;
-      };
-      
-    };
+    
+    // td 的按键绑定
     var tdClick = function (mDateObj) {
       return function () {
         // console.log(mDateObj.year);
@@ -68,6 +65,22 @@ Calendar.prototype = {
       tdArr[i].addEventListener('click', tdClick(mDateObj), false);
     }
     
+    var nextMonthButton = document.getElementById('next-month-button');
+    var preMonthButton = document.getElementById('pre-month-button');
+    var monthOperation = function (monthAddNum) {
+      return function () {
+        // create a new date
+        var date = new Date(that.currentYear, that.currentMonth - 1 + monthAddNum);
+        that.currentYear = date.getFullYear();
+        that.currentMonth = date.getMonth() + 1;
+        that.render();
+      };
+    };
+    var nextMonth = monthOperation(1);
+    var preMonth = monthOperation(-1);
+    
+    nextMonthButton.addEventListener('click', nextMonth, false);
+    preMonthButton.addEventListener('click', preMonth, false);
   },
   
   // 用于显示日历的函数

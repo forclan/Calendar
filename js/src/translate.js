@@ -1,6 +1,6 @@
 /*
  从 http://blog.jjonline.cn/userInterFace/173.html 上找到的公历与农历相互转换的代码
- 并不是自己编写的
+ 并不是自己编写的,用于将公历日期转换为农历日期
 */
 
 
