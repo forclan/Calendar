@@ -3,6 +3,14 @@ var generateMonthTag = function () {
       weekCSS = 'weekCSS',
       monthCSS = 'monthCSS';
   var dayNames =  ['Monday', 'TuesDay', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  
+  var getHoliday = function (dateObj) {
+  var solarLunarDate = generateMonthTag.getMDateLunarDate(dateObj);
+  var reSolar = holidays.solarHolidays[solarLunarDate.solar];
+  var reLunar = holidays.lunarHolidays[solarLunarDate.lunar];
+  return reSolar || reLunar || undefined;
+  };  
+  
   function date2MDate(dateObj) {
     return {
       year: dateObj.getFullYear(),
@@ -37,12 +45,14 @@ var generateMonthTag = function () {
       },
       text: mDate.day 
     });
+    var holiday = getHoliday(dateObj);
+    var dayText = holiday || lunaDate.IDayCn;
     this.innerTag.push({
       tagName: 'span',
       attribute: {
         class: 'calendar-new-table-almana'  
       },
-      text: lunaDate.IDayCn
+      text: dayText
     });
   }
   function CalendarDay(dateObj) {
@@ -128,6 +138,15 @@ var generateMonthTag = function () {
   app.setWeekNames = function (dayNameArray) {
       dayNames = dayNameArray;
   };
-  app.Week = CalendayWeek;
+  
+  app.getMDateLunarDate = function (dateObj) {
+    var mDate = date2MDate(dateObj);
+    var luna = calendar.solar2lunar(mDate.year, mDate.month, mDate.day);
+    return {
+      solar: '' + mDate.month + mDate.day,
+      lunar: '' + luna.IMonthCn + luna.IDayCn
+    };
+  };
+  app.getHoliday = getHoliday;
   return app;
 }();

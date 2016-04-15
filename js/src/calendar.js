@@ -3,15 +3,17 @@ function Calendar () {
   this.currentYear = null;
   this.currentMonth = null;
   this.divObj = null;
-
 }
 Calendar.prototype = {
   
+  // 设置当前的日期并显示
   setCurrentYearMonth: function (year, month) {
     this.currentYear = year;
     this.currentMonth = month;
+    this.render();
   },
 
+  // 获取一个月的日历
   getCanlendarMonth: function (year, month) {
     var getFirstDayOfMonth =  function (year, month) {
     // Date(2016, 3, 1) = 2016-4-1; Date's month starts at 0;
@@ -27,6 +29,7 @@ Calendar.prototype = {
     return monthTags;
   },
   
+  // 初始化函数
   init: function () {
     var date = new Date();
     var that = this;
@@ -39,6 +42,7 @@ Calendar.prototype = {
     this.render();
   },
   
+  // 添加td按键绑定
   addDayClickListen: function () {
     var that = this;
     var divObj = this.divObj;
@@ -65,15 +69,21 @@ Calendar.prototype = {
     }
     
   },
+  
+  // 用于显示日历的函数
   render: function () {
     var monthTags = this.getCanlendarMonth(this.currentYear, this.currentMonth);
     this.divObj.innerHTML = monthTags;
     this.addDayClickListen();
   },
+  
+  // api 用于设置每周的名称
   setWeekName: function (dayNameSetTo) {
       generateMonthTag.setWeekNames(dayNameSetTo);
       this.render();
   },
+  
+  // 设置td的格式 
   getTdDay: function (tdObj) {
     var dateStr = tdObj.getAttribute('date'); 
     var dateArr = dateStr.split('-');
@@ -86,6 +96,8 @@ Calendar.prototype = {
       day: day
     };
   },
+  
+  // 设置日历显示的日期
   setCalerdarDate: function (mouseEvent) {
     var tdTarget = mouseEvent.currentTarget;
     var dateStr = tdTarget.getAttribute('date'); 
