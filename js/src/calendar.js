@@ -36,6 +36,7 @@ Calendar.prototype = {
   getButtonDoc: function (id, value) {
     var buttonDoc = document.createElement('input');
     buttonDoc.setAttribute('id', id);
+    buttonDoc.setAttribute('type', 'button');
     buttonDoc.setAttribute('value', value);
     return buttonDoc;
   },
@@ -97,8 +98,8 @@ Calendar.prototype = {
         that.render();
       };
     };
-    var nextMonth = monthOperation(1);
     var preMonth = monthOperation(-1);
+    var nextMonth = monthOperation(1);
     
     nextMonthButton.addEventListener('click', nextMonth, false);
     preMonthButton.addEventListener('click', preMonth, false);
@@ -109,6 +110,8 @@ Calendar.prototype = {
     var monthTags = this.getCanlendarMonth(this.currentYear, this.currentMonth);
     this.divObj.innerHTML = monthTags;
     this.addDayClickListen();
+    console.log(this.currentMonth);
+    console.log(this.currentYear);
   },
   
   // api 用于设置每周的名称
