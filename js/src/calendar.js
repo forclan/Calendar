@@ -54,8 +54,16 @@ Calendar.prototype = {
     var operationDiv = document.createElement('div');
     var nextMonthButton = this.getButtonDoc('next-month-button', 'nextMonth');
     var preMonthButton = this.getButtonDoc('pre-month-button', 'preMonth');
+    var currentMonth = this.getButtonDoc('currentMonth', this.currentMonth);
+    var preYearButton = this.getButtonDoc('pre-year-button', 'preYear');
+    var currentYear = this.getButtonDoc('currentYear', this.currentYear);
+    var nextYearButton = this.getButtonDoc('next-year-button', 'nextYear');
     operationDiv.appendChild(preMonthButton);
+    operationDiv.appendChild(currentMonth);
     operationDiv.appendChild(nextMonthButton);
+    operationDiv.appendChild(preYearButton);
+    operationDiv.appendChild(currentYear);
+    operationDiv.appendChild(nextYearButton);
     calendarObj.appendChild(operationDiv);
     var divObj = document.createElement('div');
     calendarObj.appendChild(divObj);
@@ -63,6 +71,32 @@ Calendar.prototype = {
     document.body.appendChild(calendarObj);
     this.calendarObj = calendarObj;
     this.render();
+    var monthOperation = function (monthAddNum) {
+      return function () {
+        // create a new date
+        var date = new Date(that.currentYear, that.currentMonth - 1 + monthAddNum);
+        that.currentYear = date.getFullYear();
+        that.currentMonth = date.getMonth() + 1;
+        that.render();
+      };
+    };
+    var yearOperation = function (yearAddNum) {
+      return function () {
+        var date = new Date(that.currentYear + yearAddNum, that.currentMonth - 1);
+        that.currentYear = date.getFullYear();
+        that.currentMonth = date.getMonth() + 1;
+        that.render();
+      };
+    };
+    var preMonth = monthOperation(-1);
+    var nextMonth = monthOperation(1);
+    var preYear = yearOperation(-1);
+    var nextYear = yearOperation(1);
+    
+    nextMonthButton.addEventListener('click', nextMonth, false);
+    preMonthButton.addEventListener('click', preMonth, false);
+    preYearButton.addEventListener('click', preYear, false);
+    nextYearButton.addEventListener('click', nextYear, false);
   },
   
   // 添加td按键绑定
@@ -87,22 +121,6 @@ Calendar.prototype = {
       tdArr[i].addEventListener('click', tdClick(mDateObj), false);
     }
     
-    var nextMonthButton = document.getElementById('next-month-button');
-    var preMonthButton = document.getElementById('pre-month-button');
-    var monthOperation = function (monthAddNum) {
-      return function () {
-        // create a new date
-        var date = new Date(that.currentYear, that.currentMonth - 1 + monthAddNum);
-        that.currentYear = date.getFullYear();
-        that.currentMonth = date.getMonth() + 1;
-        that.render();
-      };
-    };
-    var preMonth = monthOperation(-1);
-    var nextMonth = monthOperation(1);
-    
-    nextMonthButton.addEventListener('click', nextMonth, false);
-    preMonthButton.addEventListener('click', preMonth, false);
   },
   
   // 用于显示日历的函数
@@ -110,6 +128,14 @@ Calendar.prototype = {
     var monthTags = this.getCanlendarMonth(this.currentYear, this.currentMonth);
     this.divObj.innerHTML = monthTags;
     this.addDayClickListen();
+    var currentYear = document.getElementById('currentYear');
+    currentYear.setAttribute('value', this.currentYear);
+    var currentMonth = document.getElementById('currentMonth');
+    currentMonth.setAttribute('value', this.currentMonth);
+    // var preMonthButtonObj =  document.getElementById('pre-month-button');
+    // preMonthButtonObj.setAttribute('value', this.currentMonth);
+    // var preYearButtonObj = document.getElementById('pre-year-button');
+    // preYearButtonObj.setAttribute('value', this.currentYear);
     console.log(this.currentMonth);
     console.log(this.currentYear);
   },
