@@ -1,14 +1,16 @@
+// 导出函数，用于生存Object对象，再通过getTag函数将对象转换为html标签
 var generateMonthTag = function () {
   var dayCSS = 'dayCSS',
       weekCSS = 'weekCSS',
       monthCSS = 'monthCSS';
   var dayNames =  ['Monday', 'TuesDay', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   
+  // 输入Date类型的对象，如果是某个节日，则返回节日名
   var getHoliday = function (dateObj) {
-  var solarLunarDate = generateMonthTag.getMDateLunarDate(dateObj);
-  var reSolar = holidays.solarHolidays[solarLunarDate.solar];
-  var reLunar = holidays.lunarHolidays[solarLunarDate.lunar];
-  return reSolar || reLunar || undefined;
+    var solarLunarDate = generateMonthTag.getMDateLunarDate(dateObj);
+    var reSolar = holidays.solarHolidays[solarLunarDate.solar];
+    var reLunar = holidays.lunarHolidays[solarLunarDate.lunar];
+    return reSolar || reLunar || undefined;
   };  
   
   function date2MDate(dateObj) {
@@ -27,6 +29,7 @@ var generateMonthTag = function () {
     return re + mDateObj.year + '-' + mDateObj.month + '-' + mDateObj.day;
   }
 
+  // 用于生存某一天的td数据
   function CalendarHref(dateObj) {
     var mDate = date2MDate(dateObj);
     var lunaDate = calendar.solar2lunar(mDate.year, mDate.month, mDate.day);
@@ -55,6 +58,7 @@ var generateMonthTag = function () {
       text: dayText
     });
   }
+  // 用于生成包含a标签的td数据
   function CalendarDay(dateObj) {
     this.tagName = 'td';
     var mDate = date2MDate(dateObj);
@@ -67,6 +71,7 @@ var generateMonthTag = function () {
     this.innerTag = new CalendarHref(dateObj);
   }
 
+  // 生成一周的tr数据
   function CalendayWeek(firstDateObj) {
     var mStartDay = date2MDate(firstDateObj);
     this.tagName = 'tr';
@@ -81,6 +86,7 @@ var generateMonthTag = function () {
     };
   }
   
+  // 生成每天名称的th数据
   function WeekHead(dayNameArr) {
     this.tagName = 'tr';
     this.innerTag = [];
@@ -96,6 +102,7 @@ var generateMonthTag = function () {
     }
   }
 
+  // 生成一个月的Object对象
   function CalendarMonth(fisrtDayOfMonth) {
     var mStartDay = date2MDate(fisrtDayOfMonth);
     var dayNameTag = new WeekHead(dayNames);
@@ -118,6 +125,7 @@ var generateMonthTag = function () {
     return monthTags;
   }
   
+  // 导出的接口,有设置day，week，month的CSS名称
   var app = {};
   app.getMonthTags = getMonthTags;
   app.setDayCSS = function () {
@@ -139,6 +147,7 @@ var generateMonthTag = function () {
       dayNames = dayNameArray;
   };
   
+  // 返回某一个的节日名称
   app.getMDateLunarDate = function (dateObj) {
     var mDate = date2MDate(dateObj);
     var luna = calendar.solar2lunar(mDate.year, mDate.month, mDate.day);

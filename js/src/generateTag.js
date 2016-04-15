@@ -1,4 +1,14 @@
+// 用于将一个Objec对象转换为html标签
+/*
+  对象结构为{
+    tagName:  当前需要转换的标签名
+    attribute: 标签内的参数
+    text:   标签的内部数据
+    innerTag: 该标签的内部标签，为一个数组
+  }
+*/
 var generateTag = function(){
+  // 返回参数的字符串
   function getAttr(attrObj) {
     var re = '';
     for (var i in attrObj) {
@@ -7,6 +17,7 @@ var generateTag = function(){
     return re;
   }
 
+  // 递归将对象转换为标签:w
   function getTag(tagObj) {
     var re = '';
     if (tagObj === null || tagObj === undefined) {
